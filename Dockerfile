@@ -1,32 +1,36 @@
-# Base image for PHP
-FROM php:8.2-cli
+# Base image
+FROM php:8.2-fpm
+
+# Set working directory
+WORKDIR /var/www
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git curl unzip libpq-dev libonig-dev libzip-dev zip nodejs npm \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip bcmath
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    npm \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Install Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www
-
-# Copy all files
-COPY . .
+# Copy application files
+COPY . /var/www
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Install Node packages for Laravel UI Vue
-RUN npm install && npm run build
+# Install Node dependencies and build Vue assets
+RUN npm install
+RUN npm run build
 
-# Clear caches
-RUN php artisan config:clear && \
-    php artisan route:clear && \
-    php artisan view:clear
-
-# Expose port
+# Expose port for Laravel
 EXPOSE 8000
 
-# Start Laravel server
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
+# Start Laravel
+CMD php artisan serve --host=0.0.0.0 --port=8000
