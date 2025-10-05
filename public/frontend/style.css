@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --primary-font: "Roboto", sans-serif;
+    --primary-white: #FFF;
+    --primary-color: #43c3D1;
+    --primary-black: #061123;
+    --secondary-color: #0284FF;
+    --tertiary-color: #2F4858;
+}
+
+body {
+    font-family: var(--primary-font);
+    font-size: 1em;
+    color: var(--primary-white);
+    font-weight: 500;
+}
+
+h1 { font-size: 2.5em; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.3em; }
+h4 { font-size: 1em; }
+
+a {
+    text-decoration: none;
+    color: var(--primary-black);
+}
+a:hover {
+    color: var(--primary-color);
+}
+
+.primary-text { color: var(--primary-color); }
+.secondary-text { color: var(--secondary-color); }
+
+ul { padding-left: 0; }
+ul li { list-style: none; }
+
+.container { max-width: 1540px; }
+
+.btn.btn-size {
+    background-color: rgba(6, 17, 35, 0.03);
+    border-color: rgba(6, 17, 35, 0.05);
+    padding: 7px 15px;
+}
+
+.btn.btn-size.active {
+    border-color: rgba(6, 17, 35, 0.20);
+}
+
+.btn.btn-size:hover {
+    border-color: rgba(6, 17, 35, 0.20);
+    color: var(--primary-black);
+}
+
+.btn.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 7px 25px;
+}
+.btn.btn-primary:hover {
+    background-color: var(--primary-black);
+    border-color: var(--primary-black);
+    color: var(--primary-white);
+}
+
+.btn.btn-secondary {
+    background-color: var(--primary-black);
+    border-color: var(--primary-black);
+    color: var(--primary-white);
+    padding: 7px 25px;
+}
+.btn.btn-secondary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--primary-white);
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--primary-black);
+}
+.navbar-nav .nav-link:hover {
+    color:var(--primary-black) !important;
+}
+.card-img img{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;    
+    transition: 1s;
+}
+.card-img img:hover{
+   transform: scale(1.1);
+   cursor: pointer;
+
+}
+.card-body a {
+    font-size: 1.2rem;
+    color: var(--primary-black)!important; /* Test ke liye red color use karo */
+}
+.card-body a:hover {
+    font-size: 1.2rem;
+    color: var(--primary-color)!important; /* Test ke liye red color use karo */
+}
+
+.price span{
+    
+     color: rgba(6, 17, 35, 0.5);
+}
+.old-price{
+    
+    color: rgba(6, 17, 35, 0.5);
+}
+footer{
+    background-color: var(--tertiary-color);
+}
+footer ul li a{
+    font-size: 1.2rem;
+    color: var(--primary-white);
+}
+footer ul li{
+    margin-bottom: 10px;
+}
+.nav-tabs .nav-link{
+    color: var(--primary-black);
+}
+.sidebar{
+    color: var(--primary-black)!important;
+    
+}
+.sidebar:hover {
+    color: var(--primary-color)!important;
+    
+}
