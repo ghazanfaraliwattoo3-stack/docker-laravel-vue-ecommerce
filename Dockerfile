@@ -1,36 +1,34 @@
-# Base image
-FROM php:8.2-fpm
+# 1️⃣ Base image
+FROM php:8.2-fpm-alpine
 
-# Set working directory
+# 2️⃣ Working directory
 WORKDIR /var/www
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# 3️⃣ System dependencies install karo
+RUN apk add --no-cache \
+    bash \
     git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
     unzip \
+    curl \
     npm \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+    nodejs \
+    composer
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# 4️⃣ Project files copy karo
+COPY . .
 
-# Copy application files
-COPY . /var/www
-
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
-
-# Install Node dependencies and build Vue assets
+# 5️⃣ Node modules install & Vite build
 RUN npm install
 RUN npm run build
 
-# Expose port for Laravel
+# 6️⃣ Laravel caches clear
+RUN php artisan view:clear
+RUN php artisan cache:clear
+RUN php artisan config:clear
+RUN php artisan storage:link || true
+
+# 7️⃣ Ports
 EXPOSE 8000
 
-# Start Laravel
+# 8️⃣ Default command
 CMD php artisan serve --host=0.0.0.0 --port=8000
