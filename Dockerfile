@@ -4,7 +4,7 @@ FROM php:8.2-fpm-alpine
 # 2️⃣ Working directory
 WORKDIR /var/www
 
-# 3️⃣ System dependencies install karo
+# 3️⃣ System dependencies aur PHP extensions install karo
 RUN apk add --no-cache \
     bash \
     git \
@@ -14,16 +14,18 @@ RUN apk add --no-cache \
     nodejs \
     libzip-dev \
     zip \
-    composer \
     oniguruma-dev \
     icu-dev \
-    bash \
     autoconf \
     g++ \
-    make
+    make \
+    libxml2-dev \
+    file \
+    bash \
+    && docker-php-ext-install pdo pdo_mysql zip intl dom tokenizer session
 
-# 4️⃣ PHP extensions install karo (Laravel ke liye)
-RUN docker-php-ext-install pdo pdo_mysql zip intl
+# 4️⃣ Composer install karo (agar Alpine pe latest composer nahi hai)
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # 5️⃣ Project files copy karo
 COPY . .
@@ -35,7 +37,7 @@ RUN composer install --optimize-autoloader --no-dev
 RUN npm install
 RUN npm run build
 
-# 8️⃣ Laravel caches clear
+# 8️⃣ Laravel caches clear & storage link
 RUN php artisan view:clear
 RUN php artisan cache:clear
 RUN php artisan config:clear
