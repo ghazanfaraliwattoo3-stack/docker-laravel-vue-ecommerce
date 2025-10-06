@@ -3,7 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
-    base: '/', // relative URLs for production
+    base: '/build/', // relative URLs for production
     plugins: [
         laravel({
             input: [
