@@ -6,7 +6,7 @@ export default defineConfig({
     base: process.env.VITE_ASSET_URL || '/build/', // Render ke liye dynamic
     plugins: [
         laravel({
-            input: ['resources/js/app.js'],
+            input: ['resources/css/app.css','resources/js/app.js'],
             refresh: true,
         }),
         vue({
@@ -29,5 +29,7 @@ export default defineConfig({
         rollupOptions: {
             input: 'resources/js/app.js',
         },
+        emptyOutDir: true,
+
     },
 });
