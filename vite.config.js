@@ -3,14 +3,11 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
-    base: '/build/', // relative URLs for production
+    base: process.env.VITE_ASSET_URL || '/build/', // Render ke liye dynamic
     plugins: [
         laravel({
-            input: [
-                // 'resources/css/app.css',
-                'resources/js/app.js',
-            ],
-            refresh: false, // production me auto refresh off
+            input: ['resources/js/app.js'],
+            refresh: true,
         }),
         vue({
             template: {
@@ -27,7 +24,7 @@ export default defineConfig({
         },
     },
     build: {
-        manifest: true, // Laravel Vite plugin ke liye
+        manifest: true,
         outDir: 'public/build',
         rollupOptions: {
             input: 'resources/js/app.js',

@@ -1,0 +1,1 @@
+import{_ as r,e as s,o as l}from"./app-CXIB815l.js";const n={methods:{showAlert(){this.$swal("Hello Vue world!!!")}}};function a(c,e,d,_,f,o){return l(),s("button",{onClick:e[0]||(e[0]=(...t)=>o.showAlert&&o.showAlert(...t))},"Hello world")}const u=r(n,[["render",a]]);export{u as default};
