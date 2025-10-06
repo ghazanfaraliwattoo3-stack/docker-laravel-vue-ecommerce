@@ -1,50 +1,69 @@
-# 1️⃣ Base image
+# ==========================
+# Stage 1: Node builder (for Vite)
+# ==========================
+FROM node:20-alpine AS node-builder
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install Node dependencies
+RUN npm install
+
+# Copy rest of the frontend files
+COPY resources resources
+
+# Build Vite assets
+RUN npm run build
+
+# ==========================
+# Stage 2: PHP + Laravel
+# ==========================
 FROM php:8.2-fpm-alpine
 
-# 2️⃣ Working directory
-WORKDIR /var/www
-
-# 3️⃣ System dependencies aur PHP extensions install karo
+# Install system dependencies
 RUN apk add --no-cache \
     bash \
     git \
     unzip \
     curl \
-    npm \
-    nodejs \
     libzip-dev \
-    zip \
-    oniguruma-dev \
     icu-dev \
     autoconf \
     g++ \
     make \
     libxml2-dev \
+    oniguruma-dev \
     file \
-    bash \
-    && docker-php-ext-install pdo pdo_mysql zip intl dom tokenizer session
+    nodejs \
+    npm
 
-# 4️⃣ Composer install karo (agar Alpine pe latest composer nahi hai)
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_mysql zip intl
 
-# 5️⃣ Project files copy karo
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy Laravel project files
 COPY . .
 
-# 6️⃣ Composer dependencies install karo
-RUN composer install --optimize-autoloader --no-dev
+# Copy built frontend assets from node-builder
+COPY --from=node-builder /var/www/html/dist public/dist
 
-# 7️⃣ Node modules install & Vite build
-RUN npm install
-RUN npm run build
+# Install PHP dependencies
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && composer install --no-dev --optimize-autoloader \
+    && rm composer-setup.php
 
-# 8️⃣ Laravel caches clear & storage link
-RUN php artisan view:clear
-RUN php artisan cache:clear
-RUN php artisan config:clear
-RUN php artisan storage:link || true
+# Set permissions for Laravel storage and cache
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
-# 9️⃣ Ports
-EXPOSE 8000
+# Expose PHP-FPM port
+EXPOSE 9000
 
-# 🔟 Default command
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Run PHP-FPM
+CMD ["php-fpm"]
