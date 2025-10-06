@@ -1,19 +1,19 @@
 # ==========================
-# Stage 1: Node builder (for Vite)
+# Stage 1: Node builder (Vite build)
 # ==========================
 FROM node:20-alpine AS node-builder
 
-# Set working directory
 WORKDIR /var/www/html
 
-# Copy package files
-COPY package.json package-lock.json ./
+# Copy package.json and package-lock.json for npm install
+COPY package*.json ./
 
 # Install Node dependencies
 RUN npm install
 
-# Copy rest of the frontend files
+# Copy resources folder (JS/CSS source)
 COPY resources resources
+COPY vite.config.js ./
 
 # Build Vite assets
 RUN npm run build
@@ -43,27 +43,26 @@ RUN apk add --no-cache \
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql zip intl
 
-# Set working directory
 WORKDIR /var/www/html
 
 # Copy Laravel project files
 COPY . .
 
-# Copy built frontend assets from node-builder
-COPY --from=node-builder /var/www/html/dist public/dist
+# Copy built Vite assets from node-builder
+COPY --from=node-builder /var/www/html/public/build public/build
 
-# Install PHP dependencies
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+# Install Composer
+RUN php -r "copy('https://getcomposer.org/installer','composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && composer install --no-dev --optimize-autoloader \
     && rm composer-setup.php
 
-# Set permissions for Laravel storage and cache
+# Set permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 # Expose PHP-FPM port
 EXPOSE 9000
 
-# Run PHP-FPM
+# Start PHP-FPM
 CMD ["php-fpm"]
