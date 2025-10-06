@@ -1,7 +1,7 @@
 {
-  "_create-element-if-not-defined-!~{00w}~.js": {
+  "_create-element-if-not-defined-!~{00v}~.js": {
     "file": "assets/create-element-if-not-defined-DHBATib1.css",
-    "src": "_create-element-if-not-defined-!~{00w}~.js"
+    "src": "_create-element-if-not-defined-!~{00v}~.js"
   },
   "_create-element-if-not-defined-ezaEGZiV.js": {
     "file": "assets/create-element-if-not-defined-ezaEGZiV.js",
@@ -19,11 +19,6 @@
     "imports": [
       "resources/js/app.js"
     ]
-  },
-  "resources/css/app.css": {
-    "file": "assets/app-4JcUPXIA.css",
-    "src": "resources/css/app.css",
-    "isEntry": true
   },
   "resources/js/app.js": {
     "file": "assets/app-X79I1gIu.js",
