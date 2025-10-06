@@ -5,13 +5,13 @@ FROM node:20-alpine AS node-builder
 
 WORKDIR /var/www/html
 
-# Copy package.json and package-lock.json for npm install
+# Copy package files for npm install
 COPY package*.json ./
 
 # Install Node dependencies
 RUN npm install
 
-# Copy resources folder (JS/CSS source)
+# Copy JS/CSS source & Vite config
 COPY resources resources
 COPY vite.config.js ./
 
@@ -43,6 +43,7 @@ RUN apk add --no-cache \
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql zip intl
 
+# Set working directory
 WORKDIR /var/www/html
 
 # Copy Laravel project files
@@ -57,12 +58,12 @@ RUN php -r "copy('https://getcomposer.org/installer','composer-setup.php');" \
     && composer install --no-dev --optimize-autoloader \
     && rm composer-setup.php
 
-# Set permissions
+# Set permissions for Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Expose PHP-FPM port
-EXPOSE 9000
+# Expose Render HTTP port
+EXPOSE 8080
 
-# Start PHP-FPM
-CMD ["php-fpm"]
+# Run PHP built-in server (Render expects public HTTP port)
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t public"]
