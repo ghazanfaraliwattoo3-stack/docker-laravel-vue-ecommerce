@@ -11,6 +11,7 @@ import Toast from "vue3-toastify";
 import ExampleComponent from './components/ExampleComponent.vue';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import '../css/app.css';
 
 const app = createApp(App);
 app.component('example-component', ExampleComponent);
