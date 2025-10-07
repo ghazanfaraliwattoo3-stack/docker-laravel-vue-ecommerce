@@ -1,9 +1,7 @@
 <template>
     <div>
       <Header v-if="!isAdminRoute" />
-      <div class="container">
         <router-view />
-      </div>
       <Footer v-if="!isAdminRoute" />
     </div>
   </template>

@@ -19,9 +19,25 @@ class Product extends Model
            asset('uploads/products/large/'.$this->image);
         
     }
+
     public function sizes()
     {
         return $this->belongsToMany(Size::class,'product_sizes');
+    }
+    
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
+     public function getCreatedAtAttribute($value)
+    {
+        return $value ? \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return $value ? \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s') : null;
     }
     
 }
