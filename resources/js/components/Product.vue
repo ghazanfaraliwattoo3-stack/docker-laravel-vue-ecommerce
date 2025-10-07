@@ -140,7 +140,7 @@
                     </button>
                 </li>
             </ul>
-            <div class="tab-content my-3" id="myTabContent">
+            <div class="tab-content my-3 text-black" id="myTabContent">
                 <div
                     class="tab-pane fade show active"
                     id="description-tab"

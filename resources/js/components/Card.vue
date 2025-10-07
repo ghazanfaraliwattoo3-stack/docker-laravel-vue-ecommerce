@@ -8,11 +8,11 @@
                 <li class="breadcrumb-item active" aria-current="page">Card</li>
             </ol>
         </nav>
-        <div class="mb-3">
+        <div class="mb-3 text-black">
             <h2>Card</h2>
         </div>
         <div
-            class="row"
+            class="row text-black"
             v-if="$store.state.cart.cart && $store.state.cart.cart.length > 0"
         >
             <div class="col-md-12">
@@ -95,7 +95,7 @@
             <h5 class="text-info text-center col-6">Oops! Cart is empty</h5>
         </div>
         <div class="row justify-content-end">
-            <div class="col-3">
+            <div class="col-3 text-black">
                 <div class="d-flex justify-content-between border-bottom mb-3">
                     <strong>Subtotal</strong>
                     <p>${{$store.getters["cart/subtotal"]}}</p>

@@ -14,7 +14,7 @@
         </div>
         <div class="row mb-5">
             <div class="col-md-7 col-12">
-                <h3 class="mb-4">Billing Details</h3>
+                <h3 class="mb-4 text-black">Billing Details</h3>
 
                 <div class="row">
                     <div class="col-12 mb-3 d-flex">
@@ -88,8 +88,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 col-12">
-                <h3 class="mb-4">Items</h3>
+            <div class="col-md-5 col-12 text-black">
+                <h3 class="mb-4 text-black">Items</h3>
                 <div class="row">
                     <table class="table">
                         <tbody v-if="$store.state.cart['cart'].length > 0">
@@ -127,7 +127,7 @@
             </div>
         </div>
         <div class="row justify-content-end mb-3">
-            <div class="col-3">
+            <div class="col-3 text-black">
                 <div
                     class="d-flex justify-content-between border-bottom pb-1 mt-3"
                 >
@@ -229,7 +229,7 @@ export default {
             this.loading = true;
             try {
                 const response = await axios.get(
-                    "http:///api/shipping",
+                    "/api/shipping",
                     {
                         headers: {
                             Authorization: `Bearer ${this.token}`,
