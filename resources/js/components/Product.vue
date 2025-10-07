@@ -19,7 +19,7 @@
                 </li>
             </ol>
         </nav>
-        <div class="row my-3">
+        <div class="row my-3 text-black">
             <div class="col-5 d-flex justify-content-center">
                 <img
                     :src="`/uploads/products/large/${product.image}`"
