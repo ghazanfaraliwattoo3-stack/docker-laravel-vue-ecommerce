@@ -232,7 +232,7 @@ export default {
                     "/api/shipping",
                     {
                         headers: {
-                            Authorization: `Bearer ${this.customerToken}`,
+                            Authorization: `Bearer ${this.token}`,
                         },
                     }
                 );
@@ -352,7 +352,7 @@ export default {
                         },
                         {
                             headers: {
-                                Authorization: `Bearer ${this.customerToken}`,
+                                Authorization: `Bearer ${this.token}`,
                                 "Content-Type": "application/json",
                             },
                         }
