@@ -155,7 +155,7 @@
                 </div>
                 <h3 class="my-3">Payment method</h3>
                 <div class="d-flex">
-                    <div class="form-check">
+                    <!-- <div class="form-check">
                         <input
                             class="form-check-input"
                             type="radio"
@@ -169,7 +169,7 @@
                         <label class="form-check-label" for="flexRadioDefault1">
                             Stripe
                         </label>
-                    </div>
+                    </div> -->
                     <div class="form-check ms-1">
                         <input
                             class="form-check-input"
