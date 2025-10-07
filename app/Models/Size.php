@@ -13,4 +13,20 @@ class Size extends Model
     {
         return $this->belongsToMany(Product::class,'product_sizes');
     }
+
+    protected $casts = [
+    'created_at' => 'datetime:Y-m-d H:i:s',
+    'updated_at' => 'datetime:Y-m-d H:i:s',
+];
+
+public function getCreatedAtAttribute($value)
+{
+    return $value ? \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s') : null;
+}
+
+public function getUpdatedAtAttribute($value)
+{
+    return $value ? \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s') : null;
+}
+
 }
